@@ -1,6 +1,5 @@
 from datetime import datetime
 import json
-import re
 
 class ExpenseManager:
     def __init__(self):
@@ -39,11 +38,33 @@ class ExpenseManager:
                 print(f"{e}")
 
     def delete_expense(self, expense_object):
-        pass
+        if not any(e == expense_object for e in self.expenses):
+            print("This entry does not exist.")
+        else:
+            try:
+                self.expenses.remove(expense_object)
+                print("Expense removed.")
+            except ValueError as e:
+                print(f"{e}")
+
+    def delete_expense_by_id(self, expense_id):
+        if not any(e.id == expense_id for e in self.expenses):
+            print("No exisiting entry with this id.")
+        else:
+            try:
+                expense = next((e for e in self.expenses if e.id == expense_id), None)
+                self.expenses.remove(expense)
+                print("Expense removed.")
+            except ValueError as e:
+                print(f"{e}")
 
     def display_all_expenses(self):
-        for expense in self.expenses: 
-            print(expense)
+        if self.expenses == []:
+            print("No expenses entry.")
+        else:
+            for expense in self.expenses: 
+                print(expense)
+        
 
 class Expense:
     def __init__(self, id:int, amount, date:str, category:str, necessity:str, description:str=""):
