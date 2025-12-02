@@ -6,10 +6,25 @@ class NoteManager:
         self.notes = []
 
     def save_to_file(self, filename="notes.json"):
-        pass
+        data = {
+            "Notes" : [note.to_dict() for note in self.notes]
+        }
+
+        with open(filename, "w") as f:
+            json.dump(data, f, indent=4)
+        print("Data saved.")
 
     def load_from_file(self, filename="notes.json"):
-        pass
+        try:
+            with open(filename, "r") as f:
+                data = json.load(f)
+                self.notes = [Note.from_dict(note) for note in data["Notes"]]
+        except FileNotFoundError:
+            print("No saved file found.")
+        except json.JSONDecodeError:
+            print("Json file is corrupted.")
+        except KeyError:
+            print("Json structure missing.")
     
     def display_all_notes(self):
         if self.notes == []:
@@ -34,9 +49,6 @@ class NoteManager:
 
     def delete_note_by_id(self, note_id):
         pass
-
-    
-
 
 class Note:
     def __init__(self, id:int, category, date, topic="Nameless.", note=""):
