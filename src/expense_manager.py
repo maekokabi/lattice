@@ -133,7 +133,7 @@ class Expense:
         try:
             datetime.strptime(self.date, "%Y-%m-%d")
         except ValueError:
-            return("Date must be in YYYY-MM-DD format.")
+            return "Date must be in YYYY-MM-DD format."
         return None
 
     def validate_category(self):

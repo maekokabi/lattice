@@ -19,7 +19,15 @@ class NoteManager:
                 print(note)
 
     def add_note(self, note_object):
-        pass
+        if any(n.id == note_object.id for n in self.notes):
+            print("This id already exists.")
+        else:
+            try:
+                note_object.validate_all()
+                self.notes.append(note_object)
+                print("Note added.")
+            except ValueError as e:
+                print({e})
 
     def delete_note(self, note_object):
         pass
@@ -31,31 +39,65 @@ class NoteManager:
 
 
 class Note:
-    def __init__(self, id:int, topic, note, category, date):
+    def __init__(self, id:int, category, date, topic="Nameless.", note=""):
         self.id = id
-        self.topic = topic
-        self.note = note
         self.category = category
         self.date = date
+        self.topic = topic
+        self.note = note     
 
     def __repr__(self):
-        return f"ID: {self.id}, Topic: {self.topic}, Note: {self.note}, Category: {self.category}, Date: {self.date}"
+        return f"ID: {self.id}, Category: {self.category}, Date: {self.date}, Topic: {self.topic}, Note: {self.note}"
     
     def to_dict(self):
         return {
             "id": self.id,
-            "topic": self.topic,
-            "note": self.note,
             "category": self.category,
-            "date": self.date
+            "date": self.date,
+            "topic": self.topic,
+            "note": self.note,        
         }
     
     @classmethod
     def from_dict(cls, data):
         return cls(
             data["id"],
-            data["topic"],
-            data["note"],
             data["category"],
-            data["date"]
+            data["date"],
+            data["topic"],
+            data["note"]
         )
+    
+    def validate_all(self):
+        errors = []
+
+        for validator in [
+            self.validate_category,
+            self.validate_date,
+            self.validate_id
+        ]:
+            result = validator()
+            if result is not None:
+                errors.append(result)
+            
+        if errors:
+            message = " | ".join(errors)
+            raise ValueError(f"Invalid note entry: {message}")
+
+
+    def validate_id(self):
+        if not isinstance(self.id, int):
+            return "ID must be a number"
+        return None
+
+    def validate_category(self):
+        if not self.category.strip():
+            return "Topic must be a non-empty string."
+        return None
+
+    def validate_date(self):
+        try:
+            datetime.strptime(self.date, "%Y-%m-%d")
+        except ValueError:
+            return "Date must be in YYYY-MM-DD format."
+        return None
