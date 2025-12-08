@@ -52,8 +52,8 @@ class ExpenseManager:
             print("No exisiting entry with this id.")
         else:
             try:
-                expense = next((e for e in self.expenses if e.id == expense_id), None)
-                self.expenses.remove(expense)
+                matched_expense = next((e for e in self.expenses if e.id == expense_id), None)
+                self.expenses.remove(matched_expense)
                 print("Expense removed.")
             except ValueError as e:
                 print(f"{e}")
@@ -67,7 +67,7 @@ class ExpenseManager:
         
 
 class Expense:
-    def __init__(self, id:int, amount, date:str, category:str, necessity:str, description:str=""):
+    def __init__(self, id:int, amount, date, category, necessity:int, description=""):
         self.id = id
         self.amount = amount
         self.date = date
@@ -107,6 +107,7 @@ class Expense:
             self.validate_amount,
             self.validate_date,
             self.validate_category,
+            self.validate_necessity,
             self.validate_description
         ]:
             result = validator()
@@ -142,8 +143,9 @@ class Expense:
         return None
 
     def validate_necessity(self):
-        # to be filled out 
-        pass
+        if  not self.necessity in range(1, 6):
+            return "Necessity must be a number in range of 1-5"
+        return None
 
     def validate_description(self):
         if not isinstance(self.description, str):
