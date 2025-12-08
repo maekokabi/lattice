@@ -75,12 +75,25 @@ class ExpenseManager:
             except ValueError as e:
                 print(f"{e}")
 
-    def search_by_necessity(self, necissity):
-        pass
+    def search_by_necessity(self, necessity):
+        if not any(e.necessity == necessity for e in self.expenses):
+            print("No exisiting entry for this necissity.")
+        else:
+            try:
+                print(f"All entries for this necissity: {necessity}")
+                [print(e) for e in self.expenses if e.necessity == necessity]
+            except ValueError as e:
+                print(f"{e}")
 
     def search_by_date(self, date):
-        pass
-        
+        if not any(e.date == date for e in self.expenses):
+            print("No exisiting entry for this date.")
+        else:
+            try:
+                print(f"All entries for the date: {date}")
+                [print(e) for e in self.expenses if e.date == date]
+            except ValueError as e:
+                print(f"{e}")
 
 class Expense:
     def __init__(self, id:int, amount, date, category, necessity:int, description=""):
