@@ -66,7 +66,7 @@ class TaskManager:
                 print(f"{e}")
 
 class Task:
-    def __init__(self, id:int, task, description="", deadline="No Deadline", done=False):
+    def __init__(self, id:int, task, description="", deadline="No Deadline", done="Not done"):
         self.id = id
         self.task = task
         self.description = description
@@ -128,4 +128,8 @@ class Task:
         except ValueError:
             return "Date must be in YYYY-MM-DD format."
         return None
+    
+    def mark_done(self):
+        self.done = "Done"
+        print("Marked as done.")
     
