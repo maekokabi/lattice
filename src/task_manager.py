@@ -65,6 +65,44 @@ class TaskManager:
             except ValueError as e:
                 print(f"{e}")
 
+    def search_by_task(self, task):
+        if not any(t.task == task for t in self.tasks):
+            print("No exisiting task entries with this name.")
+        else:
+            try:
+                [print(t) for t in self.tasks if t.task == task]
+            except ValueError as e:
+                print(f"{e}")
+
+    def search_by_deadline(self, deadline):
+        if not any(t.deadline == deadline for t in self.tasks):
+            print("No task entries with this deadline.")
+        else:
+            try:
+                [print(t) for t in self.tasks if t.deadline == deadline]
+            except ValueError as e:
+                print(f"{e}")
+
+    def all_done_tasks(self):
+        if not any(t.done == "Done" for t in self.tasks):
+            print("No finished tasks.")
+        else:
+            try:
+                print("All finished tasks: ")
+                [print(t) for t in self.tasks if t.done == "Done"]
+            except ValueError as e:
+                print(f"{e}")
+
+    def all_not_done_tasks(self):
+        if not any(t.done == "Not done" for t in self.tasks):
+            print("All tasks are completed.")
+        else:
+            try:
+                print("All unfinished tasks: ")
+                [print(t) for t in self.tasks if t.done == "Not done"]
+            except ValueError as e:
+                print(f"{e}")
+
 class Task:
     def __init__(self, id:int, task, description="", deadline="No Deadline", done="Not done"):
         self.id = id
@@ -132,4 +170,14 @@ class Task:
     def mark_done(self):
         self.done = "Done"
         print("Marked as done.")
+
+    def mark_undone(self):
+        if self.done == "Not done":
+            print("Task is already marked as undone.")
+        else:
+            try:
+                self.done == "Not done"
+                print("Marked as undone.")
+            except ValueError as e:
+                print(f"{e}")
     
