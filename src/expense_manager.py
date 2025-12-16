@@ -26,23 +26,28 @@ class ExpenseManager:
         except KeyError:
             print("JSON structure missing.")
 
-    def add_expense(self, expense_object):
+    def add_expense(self, id, amount, date, category, necessity, description=""):
+        expense_object = Expense(id, amount, date, category, necessity, description)
         if any(e.id == expense_object.id for e in self.expenses):
             print("This id already exists.")
         else:
             try:
                 expense_object.validate_all()
                 self.expenses.append(expense_object)
+                self.save_to_file()
                 print("Expense added.")
             except ValueError as e:
                 print(f"{e}")
+        
 
-    def delete_expense(self, expense_object):
+    def delete_expense(self, id, amount, date, category, necessity, description=""):
+        expense_object = Expense(id, amount, date, category, necessity, description)
         if not any(e == expense_object for e in self.expenses):
             print("This entry does not exist.")
         else:
             try:
                 self.expenses.remove(expense_object)
+                self.save_to_file()
                 print("Expense removed.")
             except ValueError as e:
                 print(f"{e}")
@@ -54,6 +59,7 @@ class ExpenseManager:
             try:
                 matched_expense = next((e for e in self.expenses if e.id == expense_id), None)
                 self.expenses.remove(matched_expense)
+                self.save_to_file()
                 print("Expense removed.")
             except ValueError as e:
                 print(f"{e}")
