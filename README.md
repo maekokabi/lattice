@@ -1,6 +1,6 @@
 # **DataHub**
 
-> A terminal-based personal data management system integrating **Expenses, Notes, and Tasks** with full CRUD operations and persistent JSON storage. Designed for modularity and future upgrades with APIs, frameworks, and databases.
+> A personal data management system integrating **Expenses, Notes, and Tasks** with full CRUD operations. Designed for modularity and future upgrades with APIs, frameworks, and databases.
 
 ---
 
@@ -20,13 +20,13 @@
 
 ## **Project Overview**
 
-DataHub is a **CLI-based personal data manager** that allows users to:
+DataHub is a **personal data manager** that allows users to:
 
 - Track and manage **expenses** with categories, amounts, dates, and priorities  
 - Store **notes** organized by topics, categories, and dates  
 - Manage **tasks**, including deadlines and completion status  
 
-All data is stored in JSON files to ensure **persistence across sessions**. The project is built with a **modular architecture**, separating the CLI interface from the core business logic.
+All data is stored to ensure **persistence across sessions**. The project is built with a **modular architecture**.
 
 ---
 
@@ -35,7 +35,7 @@ All data is stored in JSON files to ensure **persistence across sessions**. The 
 ### **Expense Manager**
 - Add, delete, and search expenses  
 - Validate inputs and prevent duplicates  
-- Automatic saving and loading from JSON  
+- Automatic saving and loading   
 
 ### **Note Manager**
 - Add, delete, and search notes  
@@ -50,7 +50,7 @@ All data is stored in JSON files to ensure **persistence across sessions**. The 
 
 ### **Architecture**
 - **Managers** handle all business logic  
-- **main.py** handles CLI input/output  
+- **main.py** handles input/output  
 - Fully modular, easy to extend for APIs, databases, or GUIs  
 
 ---
@@ -75,7 +75,7 @@ python main.py
 1. Launch the program with `python main.py`
 2. Select a manager: Expenses, Notes, or Tasks
 3. Follow the on-screen menu to add, delete, search, or display entries
-4. All data changes are automatically saved to JSON
+4. All data changes are automatically saved 
 
 ---
 
