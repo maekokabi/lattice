@@ -32,14 +32,6 @@ class ExpenseManager:
             expense_object.validate_all()
             self.expenses.append(expense_object)
             self.save_to_file()       
-
-    def delete_expense(self, id, amount, date, category, necessity, description=""):
-        expense_object = Expense(id, amount, date, category, necessity, description)
-        if not any(e == expense_object for e in self.expenses):
-            raise ValueError("This entry does not exist.")
-        else:
-            self.expenses.remove(expense_object)
-            self.save_to_file()
             
     def delete_expense_by_id(self, expense_id):
         if not any(e.id == expense_id for e in self.expenses):

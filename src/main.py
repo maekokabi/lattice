@@ -7,10 +7,9 @@ def run_expense_menu(expense_manager):
         print("\nEXPENSE MANAGER")
         print("0- Back")
         print("1- Add expense")
-        print("2- Delete expense")
-        print("3- Delete expense by id")
-        print("4- Search")
-        print("5- Display all expenses")
+        print("2- Delete expense by id")
+        print("3- Search")
+        print("4- Display all expenses")
 
         choice = input("\nWhat do you want to do? ")
 
@@ -28,19 +27,6 @@ def run_expense_menu(expense_manager):
                 print(f"{e}")
 
         elif choice == "2":
-            id = int(input("Id: "))
-            amount = int(input("Amount: "))
-            date = input("Date: ")
-            category = input("Category: ")
-            necessity = int(input("Necessity: "))
-            description = input("Description: ")
-
-            try:
-                expense_manager.delete_expense(id, amount, date, category, necessity, description)
-            except ValueError as e:
-                print(f"{e}")
-
-        elif choice == "3":
             expense_id = int(input("\nId: "))
             
             try:
@@ -48,7 +34,7 @@ def run_expense_menu(expense_manager):
             except ValueError as e:
                 print(f"{e}")
 
-        elif choice == "4":
+        elif choice == "3":
             print("1- Search by category")
             print("2- Search by necessity")
             print("3- Search by date")
@@ -85,7 +71,7 @@ def run_expense_menu(expense_manager):
                 except ValueError as e:
                     print(f"{e}")
         
-        elif choice == "5":
+        elif choice == "4":
             try:
                 expenses = expense_manager.display_all_expenses()
                 for e in expenses:
