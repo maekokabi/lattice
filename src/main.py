@@ -2,6 +2,13 @@ from expense_manager import ExpenseManager
 from note_manager import NoteManager
 from task_manager import TaskManager
 
+def handle_action(func, *args):
+    try:
+        return func(*args)
+    except ValueError as e:
+        print(e)
+        return None
+
 def run_expense_menu(expense_manager):
     while True:
         print("\nEXPENSE MANAGER")
@@ -177,8 +184,11 @@ def run_task_menu(task_manager):
             description = input("Description: ")
             deadline = input("Deadline: ")
             status = input("Status: ")
-
-            task_manager.add_task(id, task, description, deadline, status)
+            
+            try:
+                task_manager.add_task(id, task, description, deadline, status)
+            except ValueError as e:
+                print(f"{e}")
 
         elif choice == "2":
             id = int(input("\nId: "))
@@ -222,7 +232,12 @@ def run_task_menu(task_manager):
             task_manager.all_not_done_tasks()
 
         elif choice == "9":
-            task_manager.display_tasks()
+            try:
+                tasks = task_manager.display_tasks()
+                for t in tasks:
+                    print(t)
+            except ValueError as e:
+                print(f"{e}")
 
         elif choice == "0":
             break
