@@ -153,14 +153,13 @@ def run_task_menu(task_manager):
         print("\nTASK MANAGER")
         print("0- Back")
         print("1- Add a new task")
-        print("2- Delete a task")
-        print("3- Delete a task by id")
-        print("4- Mark a task done")
-        print("5- Mark a task undone")
-        print("6- Search")
-        print("7- Display all done tasks")
-        print("8- Display all undone tasks")
-        print("9- Display all tasks")
+        print("2- Delete a task by id")
+        print("3- Mark a task done")
+        print("4- Mark a task undone")
+        print("5- Search")
+        print("6- Display all done tasks")
+        print("7- Display all undone tasks")
+        print("8- Display all tasks")
 
         choice = input("\nWhat do you want to do? ")
 
@@ -170,34 +169,22 @@ def run_task_menu(task_manager):
             description = input("Description: ")
             deadline = input("Deadline: ")
             status = input("Status: ")
-            
-            try:
-                task_manager.add_task(id, task, description, deadline, status)
-            except ValueError as e:
-                print(f"{e}")
+
+            handle_action(task_manager.add_task, id, task, description, deadline, status)
 
         elif choice == "2":
-            id = int(input("\nId: "))
-            task = input("Task: ")
-            description = input("Description: ")
-            deadline = input("Deadline: ")
-            status = input("Status: \n")
-
-            task_manager.delete_task(id, task, description, deadline, status)
+            delete_id = int(input("\nTask id: "))
+            handle_action(task_manager.delete_task_by_id, delete_id)
 
         elif choice == "3":
-            delete_id = int(input("\nTask id: "))
-            task_manager.delete_task_by_id(delete_id)
+            done_id = int(input("\nTask id: "))
+            handle_action(task_manager.mark_task_done, done_id)
 
         elif choice == "4":
-            done_id = int(input("\nTask id: "))
-            task_manager.mark_task_done(done_id)
+            undone_id = int(input("\nTask id: "))
+            handle_action(task_manager.mark_task_undone, undone_id)
 
         elif choice == "5":
-            undone_id = int(input("\nTask id: "))
-            task_manager.mark_task_undone(undone_id)
-
-        elif choice == "6":
             print("\n1- Search by task")
             print("2- Search by deadline\n")
 
@@ -205,25 +192,29 @@ def run_task_menu(task_manager):
 
             if search_choice == "1":
                 search_task = input("\nSearch by task: ")
-                task_manager.search_by_task(search_task)
+                handle_action(task_manager.search_by_attribute, "task", search_task)
 
             elif search_choice == "2":
                 search_deadline = input("\nSearch by deadline: ")
-                task_manager.search_by_deadline(search_deadline)
+                handle_action(task_manager.search_by_attribute, "deadline", search_deadline)
+
+        elif choice == "6":
+            done_tasks = handle_action(task_manager.all_done_tasks)
+            if done_tasks:
+                for t in done_tasks:
+                    print(t)
 
         elif choice == "7":
-            task_manager.all_done_tasks()
+            undone_tasks = handle_action(task_manager.all_not_done_tasks)
+            if undone_tasks:
+                for t in undone_tasks:
+                    print(t)
 
         elif choice == "8":
-            task_manager.all_not_done_tasks()
-
-        elif choice == "9":
-            try:
-                tasks = task_manager.display_tasks()
+            tasks = handle_action(task_manager.display_tasks)
+            if tasks:
                 for t in tasks:
                     print(t)
-            except ValueError as e:
-                print(f"{e}")
 
         elif choice == "0":
             break
